@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+
+<div class="row mb-2" layout:fragment="content-header">
+	<div class="col-sm-6">
+		<h1 class="m-0 text-dark">PERSON</h1>
+	</div>
+	<div class="col-sm-6">
+		<ol class="breadcrumb float-sm-right">
+			<li class="breadcrumb-item"><a href="#">Home</a></li>
+			<li class="breadcrumb-item active">PERSON</li>
+		</ol>
+	</div>
+</div>
+
+<div layout:fragment="content-body">
+	<div class="col-12">
+		<div class="card card-cyan">
+
+			<div class="card-header">
+				<h3 class="card-title">
+					<b>ADD PERSON</b>
+				</h3>
+				<button type="button" class="float-right btn-secondary" id="btn-tambah-person" data-toggle="modal" data-target="#modal1">Add</button>
+			</div>
+
+			<div class="card-body">
+				<div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+					<div class="row">
+						
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12 col-md-6"></div>
+						<div class="col-sm-12 col-md-6"></div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12">
+
+							<table id="table_biodata"
+								class="table table-bordered table-striped dataTable dtr-inline"
+								role="grid" aria-describedby="example1_info">
+							</table>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Modal 1 untuk input data -->
+	<div class="modal fade" id="modal1">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header bg-cyan">
+					<h4 class="modal-title">
+						<b>FORM BIODATA</b>
+					</h4>
+					<button aria-label="Close" class="close" data-dismiss="modal"
+						type="button">
+						<span aria-hidden="true">x</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					<form role="form" id="form">
+						<div class="card-body">
+							<div class="form-group">
+								<label for="nik">NIK:</label> <input type="text"
+									class="form-control" id="nik" name="nik"
+									placeholder="Masukkan nomor NIK" required>
+							</div>
+
+							<div class="form-group">
+								<label for="name">Nama:</label> <input type="text"
+									class="form-control" id="name" name="name"
+									placeholder="Masukkan nama" required>
+							</div>
+
+							<div class="form-group">
+								<label for="address">Alamat:</label> <input type="text"
+									class="form-control" id="address" name="address"
+									placeholder="Masukkan alamat" required>
+							</div>
+
+							<div class="form-group">
+								<label for="hp">HP:</label> <input type="text"
+									class="form-control" id="hp" name="hp"
+									placeholder="Masukkan nomor HP" required>
+							</div>
+
+							<div class="form-group">
+								<label>Tanggal lahir:</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i
+											class="far fa-calendar-alt"></i>
+										</span>
+									</div>
+									<input type="date" class="form-control date"
+										data-inputmask-alias="datetime"
+										data-inputmask-inputformat="dd/mm/yyyy" data-mask
+										placeholder="dd/mm/yyyy" name="tgl" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="tempatLahir">Tempat Lahir:</label> <input
+									type="text" class="form-control" id="tempatLahir"
+									name="tempatLahir" placeholder="Masukkan tempat lahir" required>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="modal-footer justify-content-between">
+					<button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+					<button class="btn btn-info" id="btn-save-person" type="button">Save</button>
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+</div>
+
+
+
+<th:block layout:fragment="add-scripts">
+	<script th:src="@{/assets/js/person.js}"></script>
+	<script>
+
+	var formPerson = {
+		    resetForm: function () {
+		        $('#form')[0].reset();
+		    },
+		    saveForm: function () {
+		        if ($('#form').parsley().validate()) {
+		            var dataResult = getJsonForm($("#form").serializeArray(), true);
+		            console.log(dataResult);
+
+		            $.ajax({
+		            	url: '/person',
+		                type: 'POST',
+		                contentType: 'application/json',
+		                dataType: 'json',
+		                data: JSON.stringify(dataResult),
+		                success: function (result) {
+		                	console.log('success', result);
+		                	alert('status: ' + result.status + '\nmessage: ' + result.message);
+		                	$('#modal1').modal('hide')
+		                },  error: function (xhr) {
+		                	alert('An error occured: ' + xhr.status + ' ' + xhr.statusText);
+		                }
+		            });
+		        }
+		    },
+		    create: function() {
+		    	if ($.fn.DataTable.isDataTable('#table_biodata')) {
+		            //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
+		            $('#table_biodata').DataTable().clear();
+		            $('#table_biodata').DataTable().destroy();
+		        }
+		    	$.ajax({
+					type: 'GET',
+	                url: '/person',
+	                success: function (result) {
+	                	console.log(result);
+	                	$('#table_biodata').DataTable({
+	                		data : result,
+	                		columns: [
+	                        	{
+	                            	title: "NIK",
+	                            	data: "nik"
+	                        	},
+	                        	{
+	                            	title: "Name",
+	                            	data: "name"
+	                        	},
+	                        	{
+	                            	title: "Address",
+	                            	data: "address"
+	                        	},
+	                        	{
+	                            	title: "No. HP",
+	                            	data: "hp"
+	                        	},
+	                        	{
+	                            	title: "Tanggal Lahir",
+	                            	data: "tgl"
+	                        	},
+	                        	{
+	                            	title: "Tempat Lahir",
+	                            	data: "tempatLahir"
+	                        	},
+	                        	{
+	                        		title: "Action",
+                                	data: null,
+                                	render: function (data, type, row) {
+                                    	return "<button class='btn-secondary' onclick=formPerson.setEditData('" + data.id + "')>Edit</button>"
+                                	}
+                                }
+	                    	]
+	                	});
+	                }
+				});
+		    },
+		    setEditData: function (id) {
+		        formPerson.resetForm();
+
+		        $.ajax({
+		            url: '/api/biodata/' + id,
+		            method: 'get',
+		            contentType: 'application/json',
+		            dataType: 'json',
+		            success: function (res) {
+		                if (xhr.status == 200 || xhr.status == 201) {
+		                    $('#form').fromJSON(JSON.stringify(res));
+		                    $('#modal-biodata').modal('show')
+		                } else {
+
+		                }
+		            }, error: function (xhr) {
+	                	alert('An error occured: ' + xhr.status + ' ' + xhr.statusText);
+	                }
+		        });
+		    }
+	}
+	
+	
+	formPerson.create();
+	
+	$('#btn-tambah-person').click(function(){
+		formPerson.resetForm();
+		$('#modal1').modal('show')
+	});
+	
+	$('#btn-save-person').click(function(){
+		formPerson.saveForm();
+	});
+	
+	</script>
+
+</th:block>
+
+</html>
+
+

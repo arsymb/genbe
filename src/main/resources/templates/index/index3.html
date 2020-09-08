@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+
+<div class="row mb-2" layout:fragment="content-header">
+	<div class="col-sm-6">
+		<h1 class="m-0 text-dark">FORM PENDIDIKAN</h1>
+	</div>
+	<div class="col-sm-6">
+		<ol class="breadcrumb float-sm-right">
+			<li class="breadcrumb-item"><a href="#">Home</a></li>
+			<li class="breadcrumb-item active">FORM PENDIDIKAN</li>
+		</ol>
+	</div>
+</div>
+
+
+<div layout:fragment="content-body">
+	<div class="card card-cyan">
+		<div class="card-header">
+			<h1 class="card-title"><b>FORM PENDIDIKAN</b>></h1>
+		</div>
+
+		<form role="form" id="form">
+			<div class="card-body">
+				<div class="form-group">
+					<label for="idPerson">Id Person:</label> <input type="number"
+						class="form-control" id="idPerson" min="1" placeholder="Masukkan id">
+				</div>
+
+				<fieldset class="card card-outline card-cyan">
+					<div class="form-group">
+						<label for="jenjang">Jenjang:</label> <select class="form-control"
+							id="jenjang1">
+							<option selected>Pilih...</option>
+							<option value="sd">SD</option>
+							<option value="smp">SMP</option>
+							<option value="sma">SMA</option>
+							<option value="s1">S1</option>
+							<option value="s2">S2</option>
+							<option value="s3">S3</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="institusi">Institusi:</label> <input type="text"
+							class="form-control" id="institusi1" placeholder="Masukkan nama institusi">
+					</div>
+
+					<div class="form-group">
+						<label for="masuk">Tahun Masuk:</label> <input type="text"
+							class="form-control" id="masuk1" placeholder="Masukkan tahun masuk">
+					</div>
+
+					<div class="form-group">
+						<label for="lulus">Tahun Lulus:</label> <input type="text"
+							class="form-control" id="lulus1" placeholder="Masukkan tahun lulus">
+					</div>
+				</fieldset>
+
+				<fieldset class="card card-outline" id="additional">
+				</fieldset>
+
+				<a href="javascript:void(0);" class="addForm">Add</a>
+				
+				<a href="javascript:void(0);" class="remAdd">Remove</a>
+
+				<div class="card-footer">
+					<button type="button" class="btn btn-info float-right"
+						id="add_data">Submit</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+<th:block layout:fragment="add-scripts">
+	<script th:src="@{/assets/plugins/chart.js/Chart.min.js}"></script>
+	<script th:src="@{/assets/js/demo.js}"></script>
+	<script th:src="@{/assets/js/pages/dashboard3.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	<script>
+		var count = 1; /* Set Global Variable i */
+		$(function() {
+			$(".addForm").click(function() {
+				count++;
+				$("#additional").append(
+					'<fieldset class="card card-outline card-cyan">'
+					+ '<div class="form-group">'
+					+ '<label for="jenjang">Jenjang:</label> <select class="form-control" id="jenjang' + count +'">'
+					+ '<option selected>Pilih...</option>'
+					+ '<option value="sd">SD</option>'
+					+ '<option value="smp">SMP</option>'
+					+ '<option value="sma">SMA</option>'
+					+ '<option value="s1">S1</option>'
+					+ '<option value="s2">S2</option>'
+					+ '<option value="s3">S3</option>'
+					+ '</select>'
+					+ '</div>'
+					+ '<div class="form-group">'
+					+ '<label for="institusi">Institusi:</label> <input type="text" class="form-control" id="institusi' + count +'" placeholder="Masukkan nama institusi">'
+					+ '</div>'
+					+ '<div class="form-group">'
+					+ '<label for="masuk">Tahun Masuk:</label> <input type="text" class="form-control" id="masuk' + count +'" placeholder="Masukkan tahun masuk">'
+					+ '</div>'
+					+ '<div class="form-group">'
+					+ '<label for="lulus">Tahun Lulus:</label> <input type="text" class="form-control" id="lulus' + count +'" placeholder="Masukkan tahun lulus">'
+					+ '</div>'
+					+ '</fieldset>');
+				});
+			$('.remAdd').click(function() {
+				$('#additional fieldset:last-of-type').remove();
+				count--;
+			});
+			$("#add_data").click(function() {
+
+				var dataToSend = [];
+							
+				for (let i = 1; i <= count; i++) {
+					var pendidikan = {
+						jenjang : $("#jenjang" + i).val(),
+						institusi : $("#institusi" + i).val(),
+						masuk : $("#masuk" + i).val(),
+						lulus : $("#lulus" + i).val(),
+					}
+					console.log(pendidikan);
+					dataToSend.push(pendidikan);
+				}			
+				
+				var dataPendidikan = JSON.stringify(dataToSend);
+				
+				console.log(dataPendidikan);
+				$.ajax({
+				    contentType:'application/json',
+					type : 'POST',
+					url : '/pendidikan/person/'+$("#idPerson").val(),
+					data : dataPendidikan,
+					dataType : 'json',
+					success: function (result) {
+	                	console.log('success', result);
+	                	alert('status: ' + result.status + '\nmessage: ' + result.message);
+	                },  error: function (xhr) {
+	                	alert('An error occured: ' + xhr.status + ' ' + xhr.statusText);
+	                }
+				});		
+			});
+		});
+	</script>
+
+</th:block>
+
+</html>

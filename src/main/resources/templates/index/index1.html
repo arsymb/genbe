@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+
+<div class="row mb-2" layout:fragment="content-header">
+	<div class="col-sm-6">
+		<h1 class="m-0 text-dark">FORM PERSON</h1>
+	</div>
+	<div class="col-sm-6">
+		<ol class="breadcrumb float-sm-right">
+			<li class="breadcrumb-item"><a href="#">Home</a></li>
+			<li class="breadcrumb-item active">FORM PERSON</li>
+		</ol>
+	</div>
+</div>
+
+
+<div layout:fragment="content-body">
+	<div class="card card-cyan">
+		<div class="card-header">
+			<h1 class="card-title"><b>FORM PERSON</b></h1>
+		</div>
+
+		<form role="form" id="form">
+			<div class="card-body">
+				<div class="form-group">
+					<label for="nik">NIK:</label> <input type="text"
+						class="form-control" id="nik" name="nik" placeholder="Masukkan nomor NIK">
+				</div>
+
+				<div class="form-group">
+					<label for="name">Nama:</label> <input type="text"
+						class="form-control" id="name" name="name" placeholder="Masukkan nama">
+				</div>
+
+				<div class="form-group">
+					<label for="address">Alamat:</label> <input type="text"
+						class="form-control" id="address" name="address" placeholder="Masukkan alamat">
+				</div>
+
+				<div class="form-group">
+					<label for="hp">HP:</label> <input type="text" class="form-control"
+						id="hp" name="hp" placeholder="Masukkan nomor HP">
+				</div>
+
+				<div class="form-group">
+					<label>Tanggal lahir:</label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i
+								class="far fa-calendar-alt"></i>
+							</span>
+						</div>
+						<input type="date" class="form-control date"
+							data-inputmask-alias="datetime"
+							data-inputmask-inputformat="dd/mm/yyyy" data-mask
+							placeholder="dd/mm/yyyy">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="tempatLahir">Tempat Lahir:</label> <input type="text"
+						class="form-control" id="tempatLahir" name="tempatLahir"
+						placeholder="Masukkan tempat lahir">
+				</div>
+
+				<div class="card-footer">
+					<button type="button" class="btn btn-info float-right"
+						id="add_data">Submit</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+<th:block layout:fragment="add-scripts">
+	<script th:src="@{/assets/plugins/chart.js/Chart.min.js}"></script>
+	<script th:src="@{/assets/js/demo.js}"></script>
+	<script th:src="@{/assets/js/pages/dashboard3.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	<script>
+	$(function(){
+		$("#add_data").click(function() {
+			
+            var person = {
+            	nik : $("#nik").val(),
+				name : $("#name").val(),
+				address : $("#address").val(),
+				hp : $("#hp").val(),
+				tgl : $(".date").val(),
+				tempatLahir : $("#tempatLahir").val()
+            }
+            console.log(person);
+			$.ajax({
+			    contentType:'application/json',
+				type: 'POST',
+                url: '/person',
+                data: JSON.stringify(person),
+                dataType: 'json',
+                success: function (result) {
+                	console.log('success', result);
+                	alert('status: ' + result.status + '\nmessage: ' + result.message);
+                },  error: function (xhr) {
+                	alert('An error occured: ' + xhr.status + ' ' + xhr.statusText);
+                }
+            });
+        });
+	});
+
+    </script>
+
+</th:block>
+
+</html>

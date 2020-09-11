@@ -10,32 +10,32 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class GenbeController {
 
-	@GetMapping("/base")
+	@GetMapping("/home")
 	public String base() {
 //		FormDto formDto = new FormDto();
 //		model.addAttribute("formDto", formDto);
-		return "base";
+		return "index/home";
 	}
 	
-	@GetMapping("/base/index1")
+	@GetMapping("/home/biodata")
 	public String IndexOne() {
 //		FormDto formDto = new FormDto();
 //		model.addAttribute("formDto", formDto);
-		return "index/modals1";
+		return "index/index4";
 	}
 	
-	@GetMapping("/base/index2")
+	@GetMapping("/home/data")
 	public String IndexTwo() {
 //		FormDto formDto = new FormDto();
 //		model.addAttribute("formDto", formDto);
 		return "index/index2";
 	}
 	
-	@GetMapping("/base/index3")
+	@GetMapping("/home/pendidikan")
 	public String IndexThree() {
 //		FormDto formDto = new FormDto();
 //		model.addAttribute("formDto", formDto);
-		return "index/modals3";
+		return "index/index5";
 	}
 	
 }

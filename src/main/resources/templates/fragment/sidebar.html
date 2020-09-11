@@ -1,13 +1,12 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 	<!-- Brand Logo -->
-	<div class="brand-link bg-cyan"> 
-		<img alt="Prodemy Logo"	class="brand-image img-circle elevation-3"
-		th:src="@{/assets/img/AdminLTELogo.png}" style="opacity: .8"> 
-		<span class="brand-text font-weight-light">PRODEMY</span>
+	<div class="brand-link bg-warning"> 
+  		<ion-icon name="logo-pinterest" size="large" style="display: inline-block; vertical-align: middle"></ion-icon>
+  		<span class="brand-text text" style="font-family: 'Audiowide'; font-size: 20px; vertical-align: middle">PRODEMY</span>
 	</div>
 
 	<!-- Sidebar -->
-	<div class="sidebar bg-gray-dark">
+	<div class="sidebar">
 		<!-- Sidebar user panel (optional) -->
 		<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 			<div class="image">
@@ -15,7 +14,7 @@
 					class="img-circle elevation-2" alt="User Image">
 			</div>
 			<div class="info">
-				<span class="brand-text font-weight-light"><b>Arisya Maulina Bowo</b></span>
+				<span class="text-light text" style="font-family: 'Text Me One'; font-size: 20px; vertical-align: middle">Arisya Maulina Bowo</span>
 			</div>
 		</div>
 
@@ -26,28 +25,29 @@
 				<!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
 				<li class="nav-item has-treeview menu-open"><a class="nav-link"
-					href="#"> <i class="fas fa-angle-left right"></i>
-						<p >
-							MENU<i class="right fas fa-angle-left"></i>
+					href="#">
+						<i class="fas fa-th nav-icon"></i>
+						<p>MENU
+							<i class="right fas fa-angle-left"></i>
 						</p>
 				</a>
 					<ul class="nav nav-treeview">
-						<li class="nav-item"><a href="/base/index1" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Insert Person</p>
+						<li class="nav-item"><a href="/home/biodata" class="nav-link">
+								<i class="far fa-circle text-warning nav-icon"></i>
+								<p>Form Biodata</p>
 						</a></li>
-						<li class="nav-item"><a href="/base/index2" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
+						<li class="nav-item"><a href="/home/data" class="nav-link">
+								<i class="far fa-circle text-danger nav-icon"></i>
 								<p>
-									Show Biodata
+									Tabel Biodata
 								</p>
 						</a></li>
-						<li class="nav-item"><a href="/base/index3" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
+						<li class="nav-item"><a href="/home/pendidikan" class="nav-link">
+								<i class="far fa-circle text-blue nav-icon"></i>
 								<p>
-									Insert Pendidikan
+									Form Pendidikan
 								</p>
-						</a></li>
+						</a></l>
 
 					</ul>
 				</li>

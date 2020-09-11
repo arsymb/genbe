@@ -53,6 +53,8 @@ public class PersonController {
 		for (Person p:personList) {
 		      PersonDto personDto = new PersonDto();
 		      Biodata biodata = biodataRepository.findAllByPersonIdPerson(p.getIdPerson());
+		      personDto.setId(biodata.getIdBio());
+		      personDto.setIdPerson(p.getIdPerson());
 		      personDto.setNik(p.getNik());
 		      personDto.setName(p.getNama());
 		      personDto.setAddress(p.getAlamat());
@@ -63,6 +65,22 @@ public class PersonController {
 		    }
 		return personDtoList;
 	}
+	
+	@GetMapping("/{id}")
+    public PersonDto getPersonById(@PathVariable Integer id) {
+		Person person = personRepository.findById(id).get();
+		PersonDto personDto = new PersonDto();
+		Biodata biodata = biodataRepository.findAllByPersonIdPerson(person.getIdPerson());
+		personDto.setId(biodata.getIdBio());
+		personDto.setIdPerson(biodata.getPerson().getIdPerson());
+		personDto.setNik(person.getNik());
+		personDto.setName(person.getNama());
+		personDto.setAddress(person.getAlamat());
+		personDto.setTgl(biodata.getTglLahir());
+		personDto.setTempatLahir(biodata.getTmptLahir());
+		personDto.setHp(biodata.getNoHp());
+		return personDto;
+    }
 	
 	// http://localhost:8080/person/pendidikan/1212121212121212
 	@GetMapping("/pendidikan/{nik}")

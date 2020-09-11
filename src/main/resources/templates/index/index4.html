@@ -4,54 +4,30 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <div class="row mb-2" layout:fragment="content-header">
-	<div class="col-sm-6">
-		<h1 class="m-0 text-dark">PERSON</h1>
-	</div>
-	<div class="col-sm-6">
+	<div class="col-sm-12">
 		<ol class="breadcrumb float-sm-right">
-			<li class="breadcrumb-item"><a href="#">Home</a></li>
-			<li class="breadcrumb-item active">PERSON</li>
+			<li class="breadcrumb-item"><a href="/home">Home</a></li>
+			<li class="breadcrumb-item active">Form Biodata</li>
 		</ol>
 	</div>
 </div>
 
-<div layout:fragment="content-body">
-	<div class="col-12">
-		<div class="card card-cyan">
+<div class="row" layout:fragment="content-body">
+	<div class="col-sm-12">
+		<div class="card card-warning">
+			<h3 class="card-header text-center">
+				<b>FORM BIODATA</b>
+			</h3>
 
-			<div class="card-header">
-				<h3 class="card-title">
-					<b>ADD PERSON</b>
-				</h3>
-				<button type="button" class="float-right btn-secondary" id="btn-tambah-person" data-toggle="modal" data-target="#modal1">Add</button>
+			<div class="card-body bg-secondary" align="right">
+				<button type="button" class="btn btn-light btn-lg" id="btn-tambah-person" data-toggle="modal" data-target="#modal1">Add</button>
 			</div>
 
-			<div class="card-body">
-				<div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-
-					<div class="row">
-						
-					</div>
-
-					<div class="row">
-						<div class="col-sm-12 col-md-6"></div>
-						<div class="col-sm-12 col-md-6"></div>
-					</div>
-
-					<div class="row">
-						<div class="col-sm-12">
-
-							<table id="table_biodata"
-								class="table table-bordered table-striped dataTable dtr-inline"
-								role="grid" aria-describedby="example1_info">
-							</table>
-
-						</div>
-					</div>
-
-				</div>
+			<div class="card-body table-responsive">
+				<table id="table_biodata" class="table table-bordered table-hover dataTable dtr-inline"
+					style="width: 100%">
+				</table>
 			</div>
-
 		</div>
 	</div>
 
@@ -59,12 +35,11 @@
 	<div class="modal fade" id="modal1">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<div class="modal-header bg-cyan">
+				<div class="modal-header bg-warning">
 					<h4 class="modal-title">
 						<b>FORM BIODATA</b>
 					</h4>
-					<button aria-label="Close" class="close" data-dismiss="modal"
-						type="button">
+					<button type="button" aria-label="Close" class="close" data-dismiss="modal">
 						<span aria-hidden="true">x</span>
 					</button>
 				</div>
@@ -72,6 +47,9 @@
 				<div class="modal-body">
 					<form role="form" id="form">
 						<div class="card-body">
+							<input name="id" type="hidden" id="id">
+                       	 	<input name="idPerson" type="hidden" id="idPerson">
+                        
 							<div class="form-group">
 								<label for="nik">NIK:</label> <input type="text"
 									class="form-control" id="nik" name="nik"
@@ -97,7 +75,7 @@
 							</div>
 
 							<div class="form-group">
-								<label>Tanggal lahir:</label>
+								<label for="tgl">Tanggal lahir:</label>
 								<div class="input-group">
 									<div class="input-group-prepend">
 										<span class="input-group-text"> <i
@@ -121,8 +99,8 @@
 				</div>
 
 				<div class="modal-footer justify-content-between">
-					<button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
-					<button class="btn btn-info" id="btn-save-person" type="button">Save</button>
+					<button class="btn btn-default btn-lg" data-dismiss="modal" type="button">Cancel</button>
+					<button class="btn btn-secondary btn-lg" id="btn-save-person" type="button">Save</button>
 				</div>
 
 			</div>
@@ -136,15 +114,18 @@
 
 <th:block layout:fragment="add-scripts">
 	<script th:src="@{/assets/js/person.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script>
 
 	var formPerson = {
 		    resetForm: function () {
 		        $('#form')[0].reset();
+		  		$('#id').val('');
+		  		$('#idPerson').val('');
 		    },
 		    saveForm: function () {
 		        if ($('#form').parsley().validate()) {
-		            var dataResult = getJsonForm($("#form").serializeArray(), true);
+		            var dataResult = getJsonForm($('#form').serializeArray(), true);
 		            console.log(dataResult);
 
 		            $.ajax({
@@ -155,7 +136,31 @@
 		                data: JSON.stringify(dataResult),
 		                success: function (result) {
 		                	console.log('success', result);
-		                	alert('status: ' + result.status + '\nmessage: ' + result.message);
+		                	formPerson.create();
+		                	const Toast = Swal.mixin({
+		                		  toast: true,
+		                		  position: 'top-end',
+		                		  showConfirmButton: false,
+		                		  timer: 3000,
+		                		  timerProgressBar: true,
+		                		  onOpen: (toast) => {
+		                		    toast.addEventListener('mouseenter', Swal.stopTimer)
+		                		    toast.addEventListener('mouseleave', Swal.resumeTimer)
+		                		  }
+		                	})
+
+		                	if(result.message=='data berhasil masuk'){
+		                		Toast.fire({
+				                	  icon: 'success',
+				                	  title: 'status: ' + result.status + '\nmessage: ' + result.message + ''
+				                	})
+		                	} else{
+		                		Toast.fire({
+				                	  icon: 'error',
+				                	  title: 'status: ' + result.status + '\nmessage: ' + result.message + ''
+				                	})
+		                	}
+		                	
 		                	$('#modal1').modal('hide')
 		                },  error: function (xhr) {
 		                	alert('An error occured: ' + xhr.status + ' ' + xhr.statusText);
@@ -205,7 +210,7 @@
 	                        		title: "Action",
                                 	data: null,
                                 	render: function (data, type, row) {
-                                    	return "<button class='btn-secondary' onclick=formPerson.setEditData('" + data.id + "')>Edit</button>"
+                                    	return "<button class='btn btn-secondary' onclick=formPerson.setEditData('" + data.id + "')>Edit</button>"
                                 	}
                                 }
 	                    	]
@@ -217,20 +222,22 @@
 		        formPerson.resetForm();
 
 		        $.ajax({
-		            url: '/api/biodata/' + id,
+		            url: '/person/' + id,
 		            method: 'get',
 		            contentType: 'application/json',
 		            dataType: 'json',
-		            success: function (res) {
+		            success: function (res, status, xhr) {
+		            	console.log(res);
 		                if (xhr.status == 200 || xhr.status == 201) {
 		                    $('#form').fromJSON(JSON.stringify(res));
-		                    $('#modal-biodata').modal('show')
+		                    $('#modal1').modal('show')
 		                } else {
 
 		                }
-		            }, error: function (xhr) {
-	                	alert('An error occured: ' + xhr.status + ' ' + xhr.statusText);
-	                }
+		            },
+		            error: function (err) {
+		                console.log(err);
+		            }
 		        });
 		    }
 	}

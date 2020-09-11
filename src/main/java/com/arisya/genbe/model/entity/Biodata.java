@@ -1,6 +1,5 @@
 package com.arisya.genbe.model.entity;
 
-import java.util.Date;
 import javax.persistence.*;
 
 @Entity
@@ -41,12 +40,13 @@ public class Biodata {
 		this.noHp = noHp;
 	}
 
-	public Date getTglLahir() {
+
+	public java.sql.Date getTglLahir() {
 		return tglLahir;
 	}
 
-	public void setTglLahir(Date date) {
-		this.tglLahir = new java.sql.Date(date.getTime());
+	public void setTglLahir(java.sql.Date tglLahir) {
+		this.tglLahir = tglLahir;
 	}
 
 	public String getTmptLahir() {

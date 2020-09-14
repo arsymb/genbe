@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html layout:decorate="~{base}" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 
 <div class="row mb-2" layout:fragment="content-header">
 	<div class="col-sm-12">
 		<ol class="breadcrumb float-sm-right">
-			<li class="breadcrumb-item"><a href="#">Home</a></li>
+			<li class="breadcrumb-item"><a href="/home">Home</a></li>
 			<li class="breadcrumb-item active">Form Biodata</li>
 		</ol>
 	</div>
@@ -20,7 +19,8 @@
 			</h3>
 
 			<div class="card-body bg-secondary" align="right">
-				<button type="button" class="btn btn-light btn-lg" id="btn-tambah-person" data-toggle="modal" data-target="#modal1">Add</button>
+				<button type="button" class="btn btn-light btn-lg" id="btn-tambah-person" data-toggle="modal"
+					data-target="#modal1">Add</button>
 			</div>
 
 			<div class="card-body table-responsive">
@@ -48,29 +48,25 @@
 					<form role="form" id="form">
 						<div class="card-body">
 							<input name="id" type="hidden" id="id">
-                       	 	<input name="idPerson" type="hidden" id="idPerson">
-                        
+							<input name="idPerson" type="hidden" id="idPerson">
+
 							<div class="form-group">
-								<label for="nik">NIK:</label> <input type="text"
-									class="form-control" id="nik" name="nik"
-									placeholder="Masukkan nomor NIK" required>
+								<label for="nik">NIK:</label> <input type="text" class="form-control" id="nik"
+									name="nik" placeholder="Masukkan nomor NIK" required>
 							</div>
 
 							<div class="form-group">
-								<label for="name">Nama:</label> <input type="text"
-									class="form-control" id="name" name="name"
-									placeholder="Masukkan nama" required>
+								<label for="name">Nama:</label> <input type="text" class="form-control" id="name"
+									name="name" placeholder="Masukkan nama" required>
 							</div>
 
 							<div class="form-group">
-								<label for="address">Alamat:</label> <input type="text"
-									class="form-control" id="address" name="address"
-									placeholder="Masukkan alamat" required>
+								<label for="address">Alamat:</label> <input type="text" class="form-control"
+									id="address" name="address" placeholder="Masukkan alamat" required>
 							</div>
 
 							<div class="form-group">
-								<label for="hp">HP:</label> <input type="text"
-									class="form-control" id="hp" name="hp"
+								<label for="hp">HP:</label> <input type="text" class="form-control" id="hp" name="hp"
 									placeholder="Masukkan nomor HP" required>
 							</div>
 
@@ -78,21 +74,18 @@
 								<label for="tgl">Tanggal lahir:</label>
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text"> <i
-											class="far fa-calendar-alt"></i>
+										<span class="input-group-text"> <i class="far fa-calendar-alt"></i>
 										</span>
 									</div>
-									<input type="date" class="form-control date"
-										data-inputmask-alias="datetime"
-										data-inputmask-inputformat="dd/mm/yyyy" data-mask
-										placeholder="dd/mm/yyyy" name="tgl" required>
+									<input type="date" class="form-control date" data-inputmask-alias="datetime"
+										data-inputmask-inputformat="dd/mm/yyyy" data-mask placeholder="dd/mm/yyyy"
+										name="tgl" required>
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label for="tempatLahir">Tempat Lahir:</label> <input
-									type="text" class="form-control" id="tempatLahir"
-									name="tempatLahir" placeholder="Masukkan tempat lahir" required>
+								<label for="tempatLahir">Tempat Lahir:</label> <input type="text" class="form-control"
+									id="tempatLahir" name="tempatLahir" placeholder="Masukkan tempat lahir" required>
 							</div>
 						</div>
 					</form>
@@ -108,164 +101,276 @@
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
+
+	<!-- Modal 2 untuk edit data -->
+	<div class="modal fade" id="modal2">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header bg-warning">
+					<h4 class="modal-title">
+						<b>FORM BIODATA</b>
+					</h4>
+					<button type="button" aria-label="Close" class="close" data-dismiss="modal">
+						<span aria-hidden="true">x</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					<form role="form" id="form2">
+						<div class="card-body">
+							<input name="id" type="hidden" id="id2" />
+							<input name="idPerson" type="hidden" id="idPerson2" />
+
+							<div class="form-group">
+								<label for="nik">NIK:</label> <input type="text" class="form-control" id="nik2"
+									name="nik" placeholder="Masukkan nomor NIK" required>
+							</div>
+
+							<div class="form-group">
+								<label for="name">Nama:</label> <input type="text" class="form-control" id="name2"
+									name="name" placeholder="Masukkan nama" required>
+							</div>
+
+							<div class="form-group">
+								<label for="address">Alamat:</label> <input type="text" class="form-control"
+									id="address2" name="address" placeholder="Masukkan alamat" required>
+							</div>
+
+							<div class="form-group">
+								<label for="hp">HP:</label> <input type="text" class="form-control" id="hp2" name="hp"
+									placeholder="Masukkan nomor HP" required>
+							</div>
+
+							<div class="form-group">
+								<label for="tgl">Tanggal lahir:</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i class="far fa-calendar-alt"></i>
+										</span>
+									</div>
+									<input type="date" class="form-control date" data-inputmask-alias="datetime"
+										data-inputmask-inputformat="dd/mm/yyyy" data-mask placeholder="dd/mm/yyyy"
+										name="tgl" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="tempatLahir">Tempat Lahir:</label> <input type="text" class="form-control"
+									id="tempatLahir2" name="tempatLahir" placeholder="Masukkan tempat lahir" required>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="modal-footer justify-content-between">
+					<button class="btn btn-default btn-lg" data-dismiss="modal" type="button">Cancel</button>
+					<button class="btn btn-secondary btn-lg" id="btn-edit-person" type="button">Save</button>
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
 </div>
-
-
 
 <th:block layout:fragment="add-scripts">
 	<script th:src="@{/assets/js/person.js}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script>
 
-	var formPerson = {
-		    resetForm: function () {
-		        $('#form')[0].reset();
-		  		$('#id').val('');
-		  		$('#idPerson').val('');
-		    },
-		    saveForm: function () {
-		        if ($('#form').parsley().validate()) {
-		            var dataResult = getJsonForm($('#form').serializeArray(), true);
-		            console.log(dataResult);
-
-		            $.ajax({
-		            	url: '/person',
-		                type: 'POST',
-		                contentType: 'application/json',
-		                dataType: 'json',
-		                data: JSON.stringify(dataResult),
-		                success: function (result) {
-		                	console.log('success', result);
-		                	formPerson.create();
-		                	const Toast = Swal.mixin({
-		                		  toast: true,
-		                		  position: 'top-end',
-		                		  showConfirmButton: false,
-		                		  timer: 3000,
-		                		  timerProgressBar: true,
-		                		  onOpen: (toast) => {
-		                		    toast.addEventListener('mouseenter', Swal.stopTimer)
-		                		    toast.addEventListener('mouseleave', Swal.resumeTimer)
-		                		  }
-		                	})
-
-		                	if(result.message=='data berhasil masuk'){
-		                		Toast.fire({
-				                	  icon: 'success',
-				                	  title: 'status: ' + result.status + '\nmessage: ' + result.message + ''
-				                	})
-		                	} else{
-		                		Toast.fire({
-				                	  icon: 'error',
-				                	  title: 'status: ' + result.status + '\nmessage: ' + result.message + ''
-				                	})
-		                	}
-		                	
-		                	$('#modal1').modal('hide')
-		                },  error: function (xhr) {
-		                	alert('An error occured: ' + xhr.status + ' ' + xhr.statusText);
-		                }
-		            });
-		        }
-		    },
-		    create: function() {
-		    	if ($.fn.DataTable.isDataTable('#table_biodata')) {
-		            //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
-		            $('#table_biodata').DataTable().clear();
-		            $('#table_biodata').DataTable().destroy();
-		        }
-		    	$.ajax({
+		var tablePerson = {
+			create: function () {
+				if ($.fn.DataTable.isDataTable('#table_biodata')) {
+					//table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
+					$('#table_biodata').DataTable().clear();
+					$('#table_biodata').DataTable().destroy();
+				}
+				$.ajax({
 					type: 'GET',
-	                url: '/person',
-	                success: function (result) {
-	                	console.log(result);
-	                	$('#table_biodata').DataTable({
-	                		data : result,
-	                		columns: [
-	                        	{
-	                            	title: "NIK",
-	                            	data: "nik"
-	                        	},
-	                        	{
-	                            	title: "Name",
-	                            	data: "name"
-	                        	},
-	                        	{
-	                            	title: "Address",
-	                            	data: "address"
-	                        	},
-	                        	{
-	                            	title: "No. HP",
-	                            	data: "hp"
-	                        	},
-	                        	{
-	                            	title: "Tanggal Lahir",
-	                            	data: "tgl"
-	                        	},
-	                        	{
-	                            	title: "Tempat Lahir",
-	                            	data: "tempatLahir"
-	                        	},
-	                        	{
-	                        		title: "Edit",
-                                	data: null,
-                                	render: function (data, type, row) {
-                                    	return "<button class='btn btn-secondary' onclick=formPerson.setEditData('" + data.id + "')>Edit</button>"
-                                	}
-                                },
-                                {
+					url: '/person',
+					success: function (result) {
+						console.log(result);
+						$('#table_biodata').DataTable({
+							data: result,
+							columns: [
+								{
+									title: "NIK",
+									data: "nik"
+								},
+								{
+									title: "Name",
+									data: "name"
+								},
+								{
+									title: "Address",
+									data: "address"
+								},
+								{
+									title: "No. HP",
+									data: "hp"
+								},
+								{
+									title: "Tanggal Lahir",
+									data: "tgl"
+								},
+								{
+									title: "Tempat Lahir",
+									data: "tempatLahir"
+								},
+								{
+									title: "Action",
+									data: null,
+									render: function (data, type, row) {
+										return "<button class='btn btn-secondary' onclick=formPerson.setEditData('" + data.id + "')>Edit</button>"
+									}
+								},
+								{
 	                        		title: "Tambah Pendidikan",
                                 	data: null,
                                 	render: function (data, type, row) {
                                 		console.log(row.idPerson);
-                                    	return '<a href="/dashboard/pendidikanbaru/'+data.idPerson+'">Tambah Pendidikan</a>'
+                                    	return '<a href="/home/index7/' + data.idPerson + '">Tambah Pendidikan</a>'
                                 	}
                                 }
-	                    	]
-	                	});
-	                }
+							]
+						});
+					}
 				});
-		    },
-		    setEditData: function (id) {
-		        formPerson.resetForm();
+			}
+		}
 
-		        $.ajax({
-		            url: '/person/' + id,
-		            method: 'get',
-		            contentType: 'application/json',
-		            dataType: 'json',
-		            success: function (res, status, xhr) {
-		            	console.log(res);
-		                if (xhr.status == 200 || xhr.status == 201) {
-		                    $('#form').fromJSON(JSON.stringify(res));
-		                    $('#modal1').modal('show')
-		                } else {
+		var formPerson = {
+			resetForm: function () {
+				$('#form')[0].reset();
+				$('#id').val('');
+				$('#idPerson').val('');
+			},
+			saveForm: function () {
+				if ($('#form').parsley().validate()) {
+					var dataResult = getJsonForm($('#form').serializeArray(), true);
+					console.log(dataResult);
 
-		                }
-		            },
-		            error: function (err) {
-		                console.log(err);
-		            }
-		        });
-		    }
-	}
-	
-	
-	formPerson.create();
-	
-	$('#btn-tambah-person').click(function(){
-		formPerson.resetForm();
-		$('#modal1').modal('show')
-	});
-	
-	$('#btn-save-person').click(function(){
-		formPerson.saveForm();
-	});
-	
+					$.ajax({
+						url: '/person',
+						type: 'POST',
+						contentType: 'application/json',
+						dataType: 'json',
+						data: JSON.stringify(dataResult),
+						success: function (result) {
+							console.log('success', result);
+							formPerson.create();
+							const Toast = Swal.mixin({
+								toast: true,
+								position: 'top-end',
+								showConfirmButton: false,
+								timer: 3000,
+								timerProgressBar: true,
+								onOpen: (toast) => {
+									toast.addEventListener('mouseenter', Swal.stopTimer)
+									toast.addEventListener('mouseleave', Swal.resumeTimer)
+								}
+							})
+
+							if (result.message == 'data berhasil masuk') {
+								Toast.fire({
+									icon: 'success',
+									title: 'status: ' + result.status + '\nmessage: ' + result.message + ''
+								})
+							} else {
+								Toast.fire({
+									icon: 'error',
+									title: 'status: ' + result.status + '\nmessage: ' + result.message + ''
+								})
+							}
+
+							$('#modal1').modal('hide')
+						}, error: function (xhr) {
+							alert('An error occured: ' + xhr.status + ' ' + xhr.statusText);
+						}
+					});
+				}
+			},
+			setEditData: function (id) {
+				$.ajax({
+					url: '/person/' + id,
+					method: 'get',
+					contentType: 'application/json',
+					dataType: 'json',
+					success: function (res, status, xhr) {
+						console.log(res);
+						if (xhr.status == 200 || xhr.status == 201) {
+							$('#form2').fromJSON(JSON.stringify(res));
+							$('#modal2').modal('show')
+						}
+					}, error: function (err) {
+						alert('An error occured: ' + xhr.status + ' ' + xhr.statusText);
+					}
+				});
+			},
+			editForm: function () {
+				if ($('#form2').parsley().validate()) {
+					var dataResult = getJsonForm($('#form2').serializeArray(), true);
+					console.log(dataResult);
+
+					$.ajax({
+						url: '/person/' + $("#idPerson2").val(),
+						type: 'PUT',
+						contentType: 'application/json',
+						dataType: 'json',
+						data: JSON.stringify(dataResult),
+						success: function (result) {
+							console.log('success', result);
+							formPerson.create();
+							const Toast = Swal.mixin({
+								toast: true,
+								position: 'top-end',
+								showConfirmButton: false,
+								timer: 3000,
+								timerProgressBar: true,
+								onOpen: (toast) => {
+									toast.addEventListener('mouseenter', Swal.stopTimer)
+									toast.addEventListener('mouseleave', Swal.resumeTimer)
+								}
+							})
+							if (result.status == 'true') {
+								Toast.fire({
+									icon: 'success',
+									title: 'status: ' + result.status + '\nmessage: ' + result.message + ''
+								})
+							} else {
+								Toast.fire({
+									icon: 'error',
+									title: 'status: ' + result.status + '\nmessage: ' + result.message + ''
+								})
+							}
+							$('#modal2').modal('hide')
+						}, error: function (xhr) {
+							alert('An error occured: ' + xhr.status + ' ' + xhr.statusText);
+						}
+					});
+				}
+			}
+		}
+
+		tablePerson.create();
+
+		$('#btn-tambah-person').click(function () {
+			formPerson.resetForm();
+			$('#modal1').modal('show')
+		});
+
+		$('#btn-save-person').click(function () {
+			formPerson.saveForm();
+		});
+
+		$('#btn-edit-person').click(function () {
+			formPerson.editForm();
+		});
+
 	</script>
 
 </th:block>
 
 </html>
-
-

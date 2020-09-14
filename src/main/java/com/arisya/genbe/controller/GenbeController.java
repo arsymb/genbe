@@ -1,11 +1,9 @@
 package com.arisya.genbe.controller;
 
-//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-//import com.arisya.spring.model.dto.FormDto;
-//import com.arisya.spring.service.FormService;
+import groovyjarjarpicocli.CommandLine.Model;
 
 @Controller
 public class GenbeController {
@@ -26,16 +24,24 @@ public class GenbeController {
 	
 	@GetMapping("/home/data")
 	public String IndexTwo() {
-//		FormDto formDto = new FormDto();
-//		model.addAttribute("formDto", formDto);
 		return "index/index2";
 	}
 	
 	@GetMapping("/home/pendidikan")
 	public String IndexThree() {
-//		FormDto formDto = new FormDto();
-//		model.addAttribute("formDto", formDto);
 		return "index/index5";
+	}
+
+	@GetMapping("/home/index6")
+	public String IndexSix() {
+		return "index/index6";
+	}
+
+	@GetMapping("/home/index7")
+	public String IndexSeven(Model model) {
+		// PersonDto personDto = new PersonDto();
+		// model.addAttribute("formDto", personDto);
+		return "index/index7";
 	}
 	
 }

@@ -22,6 +22,7 @@ import com.arisya.genbe.service.PersonService;
 
 @RestController
 @RequestMapping("/person")
+@CrossOrigin(origins="http://localhost:3000")
 public class PersonController {
 
 	private final PersonRepository personRepository;
@@ -40,14 +41,15 @@ public class PersonController {
 	}
 
 	// http://localhost:8080/person
-	/* Insert Data Person */
+	/* Insert Data Person & Biodata */
 	@PostMapping
 	public StatusDto insert(@RequestBody PersonDto personDto) {
 		return personService.insertPerson(personDto);
 	}
 	
+	// http://localhost:8080/person/
 	@GetMapping
-	public List<PersonDto> getPerson(){
+	public List<PersonDto> get(){
 		List<Person> personList = personRepository.findAll();
 		List<PersonDto> personDtoList = new ArrayList<>();
 		for (Person p:personList) {
@@ -66,6 +68,7 @@ public class PersonController {
 		return personDtoList;
 	}
 	
+	// http://localhost:8080/person/1
 	@GetMapping("/{id}")
     public PersonDto getPersonById(@PathVariable Integer id) {
 		Person person = personRepository.findById(id).get();
@@ -80,11 +83,26 @@ public class PersonController {
 		personDto.setTempatLahir(biodata.getTmptLahir());
 		personDto.setHp(biodata.getNoHp());
 		return personDto;
-    }
+	}
+	
+	// http://localhost:8080/person/1
+	/* Edit Data Person & Biodata */
+	@PutMapping("/{id}")
+	public StatusDto update(@RequestBody PersonDto newPerson, @PathVariable Integer id){
+		return personService.updatePerson(newPerson, id);
+	}
+
+	// http://localhost:8080/person/pendidikan
+	@GetMapping("/pendidikan")
+	public List<FullDto> getAll() {
+		List<Biodata> biodataList = biodataRepository.findAll();
+		List<FullDto> fullDto = biodataList.stream().map(x -> convertToDto(x.getPerson().getNik())).collect(Collectors.toList());
+		return fullDto;
+	}
 	
 	// http://localhost:8080/person/pendidikan/1212121212121212
 	@GetMapping("/pendidikan/{nik}")
-	public Object get(@PathVariable String nik) {
+	public Object getAllByNik(@PathVariable String nik) {
 		List<Object> status = new ArrayList<>();
 		StatusDto statusDto = new StatusDto();
 		StatusDto2 statusDto2 = new StatusDto2();
@@ -106,13 +124,6 @@ public class PersonController {
 			status.add(statusDto);
 		}
 		return status.get(0);
-	}
-	
-	@GetMapping("/pendidikan")
-	public List<FullDto> get() {
-		List<Biodata> biodataList = biodataRepository.findAll();
-		List<FullDto> fullDto = biodataList.stream().map(x -> convertToDto(x.getPerson().getNik())).collect(Collectors.toList());
-		return fullDto;
 	}
 	
 	private FullDto convertToDto(String nik) {

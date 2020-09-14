@@ -89,6 +89,32 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
+	public StatusDto updatePerson(PersonDto newPerson, Integer id) {
+		StatusDto statusDto = new StatusDto();
+		Person person = personRepository.findById(id).get();
+		Biodata biodata = biodataRepository.findAllByPersonIdPerson(person.getIdPerson());
+		person.setNik(newPerson.getNik());
+		person.setNama(newPerson.getName());
+		person.setAlamat(newPerson.getAddress());
+		biodata.setNoHp(newPerson.getHp());
+		biodata.setTglLahir(newPerson.getTgl());
+		biodata.setTmptLahir(newPerson.getTempatLahir());
+		personRepository.save(person);
+		biodataRepository.save(biodata);
+		if (person.getNik().equals(newPerson.getNik()) && person.getNama().equals(newPerson.getName())
+				&& person.getAlamat().equals(newPerson.getAddress()) && biodata.getNoHp().equals(newPerson.getHp())
+				&& biodata.getTglLahir().equals(newPerson.getTgl())
+				&& biodata.getTmptLahir().equals(newPerson.getTempatLahir())) {
+			statusDto.setStatus("true");
+			statusDto.setMessage("perubahan data berhasil dilakukan");
+		} else {
+			statusDto.setStatus("false");
+			statusDto.setMessage("perubahan data gagal");
+		}
+		return statusDto;
+	}
+
+	@Override
 	public void insertPendidikan(Integer idPerson, List<PendidikanDto> pendidikanDto) {
 		if (personRepository.findById(idPerson).isPresent()) {
 			List<Pendidikan> pendidikan = pendidikanDto.stream().map(x -> convertToPendidikanEntity(x, idPerson))

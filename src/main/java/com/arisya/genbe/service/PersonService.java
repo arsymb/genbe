@@ -15,4 +15,5 @@ public interface PersonService {
 	Biodata convertToBiodataEntity(PersonDto personDto, Integer idPerson);
 	void insertPendidikan(Integer idPerson, List<PendidikanDto> pendidikanDto);
 	Pendidikan convertToPendidikanEntity(PendidikanDto pendidikanDto, Integer idPerson);
+	StatusDto updatePerson(PersonDto newPerson, Integer id);
 }

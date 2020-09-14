@@ -12,6 +12,7 @@ import com.arisya.genbe.service.PersonServiceImpl;
 
 @RestController
 @RequestMapping("/pendidikan")
+@CrossOrigin(origins="http://localhost:3000")
 public class PendidikanController {
 
 	@Autowired

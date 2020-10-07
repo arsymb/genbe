@@ -46,10 +46,11 @@
 			<artifactId>thymeleaf-layout-dialect</artifactId>
 		</dependency>
 
-		<dependency>
+		<!-- dependency for date JSONFormat in Jackson -->
+		<!-- <dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>io.springfox</groupId>

@@ -4,16 +4,18 @@ import './App.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import NavigationBar from './components/NavigationBar';
-import Welcome from './components/Welcome';
-import Footer from './components/Footer';
-import Person from './components/Person';
-import PersonTable from './components/PersonTable';
-import Pendidikan from './components/Pendidikan';
+import NavigationBar from './components/fragment/NavigationBar';
+import Welcome from './components/home/Welcome';
+import Footer from './components/fragment/Footer';
+import PersonRoute from './components/form/PersonRoute';
+// import PersonTable from './components/table/PersonTable';
+import PersonTable2 from './components/table/PersonTable2';
+import PersonTable3 from './components/table/PersonTable3';
+import Pendidikan from './components/form/Pendidikan';
 
 function App() {
   const margin = {
-    marginTop: "80px",
+    marginTop: "30px",
     marginBottom: "50px"
   }
 
@@ -25,8 +27,9 @@ function App() {
           <Col lg={12} style={margin}>
             <Switch>
               <Route path="/" exact component={Welcome}/>
-              <Route path="/biodata" exact component={Person}/>
-              <Route path="/data" exact component={PersonTable}/>
+              <Route path="/biodata" exact component={PersonRoute}/>
+              <Route path="/data" exact component={PersonTable3}/>
+              <Route path="/edit/:idPerson" exact component={PersonRoute}/>
               <Route path="/pendidikan" exact component={Pendidikan}/>
             </Switch>
           </Col>

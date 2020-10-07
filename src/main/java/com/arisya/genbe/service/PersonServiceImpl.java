@@ -89,27 +89,40 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public StatusDto updatePerson(PersonDto newPerson, Integer id) {
+	public StatusDto updatePerson(PersonDto newPerson, Integer idPerson) {
 		StatusDto statusDto = new StatusDto();
-		Person person = personRepository.findById(id).get();
+		Person person = personRepository.findById(idPerson).get();
 		Biodata biodata = biodataRepository.findAllByPersonIdPerson(person.getIdPerson());
-		person.setNik(newPerson.getNik());
-		person.setNama(newPerson.getName());
-		person.setAlamat(newPerson.getAddress());
-		biodata.setNoHp(newPerson.getHp());
-		biodata.setTglLahir(newPerson.getTgl());
-		biodata.setTmptLahir(newPerson.getTempatLahir());
-		personRepository.save(person);
-		biodataRepository.save(biodata);
-		if (person.getNik().equals(newPerson.getNik()) && person.getNama().equals(newPerson.getName())
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(newPerson.getTgl());
+		if (Year.now().getValue() - calendar.get(Calendar.YEAR) < 30 && newPerson.getNik().length() != 16) {
+			statusDto.setStatus("false");
+			statusDto.setMessage("data gagal masuk, umur kurang dari 30 tahun dan jumlah digit nik tidak sama dengan 16");
+		} else if (Year.now().getValue() - calendar.get(Calendar.YEAR) < 30) {
+			statusDto.setStatus("false");
+			statusDto.setMessage("data gagal masuk, umur kurang dari 30 tahun");
+		} else if (newPerson.getNik().length() != 16) {
+			statusDto.setStatus("false");
+			statusDto.setMessage("jumlah digit nik tidak sama dengan 16");
+		} else {
+			person.setNik(newPerson.getNik());
+			person.setNama(newPerson.getName());
+			person.setAlamat(newPerson.getAddress());
+			biodata.setNoHp(newPerson.getHp());
+			biodata.setTglLahir(newPerson.getTgl());
+			biodata.setTmptLahir(newPerson.getTempatLahir());
+			personRepository.save(person);
+			biodataRepository.save(biodata);
+			if (person.getNik().equals(newPerson.getNik()) && person.getNama().equals(newPerson.getName())
 				&& person.getAlamat().equals(newPerson.getAddress()) && biodata.getNoHp().equals(newPerson.getHp())
 				&& biodata.getTglLahir().equals(newPerson.getTgl())
 				&& biodata.getTmptLahir().equals(newPerson.getTempatLahir())) {
-			statusDto.setStatus("true");
-			statusDto.setMessage("perubahan data berhasil dilakukan");
-		} else {
-			statusDto.setStatus("false");
-			statusDto.setMessage("perubahan data gagal");
+				statusDto.setStatus("true");
+				statusDto.setMessage("perubahan data berhasil dilakukan");
+			} else {
+				statusDto.setStatus("false");
+				statusDto.setMessage("perubahan data gagal");
+			}
 		}
 		return statusDto;
 	}
@@ -145,4 +158,25 @@ public class PersonServiceImpl implements PersonService {
 		return pendidikan;
 	}
 
+	@Override
+	public StatusDto deleteData(Integer idPerson){
+		StatusDto statusDto = new StatusDto();
+		Biodata biodata = biodataRepository.findAllByPersonIdPerson(idPerson);
+		biodataRepository.deleteById(biodata.getIdBio());
+		List<Pendidikan> pendidikan = pendidikanRepository.findAllByPersonIdPerson(idPerson);
+		for (int i = 0; i < pendidikan.size(); i++) {
+			pendidikanRepository.deleteById(pendidikan.get(i).getIdPendidikan());
+		}
+		personRepository.deleteById(idPerson);
+		if(personRepository.findById(idPerson).isPresent() == false && biodataRepository.findAllByPersonIdPerson(idPerson) == null 
+			&& pendidikanRepository.findAllByPersonIdPerson(idPerson).isEmpty()){
+			statusDto.setStatus("true");
+			statusDto.setMessage("data berhasil dihapus");
+		} else {
+			statusDto.setStatus("false");
+			statusDto.setMessage("data gagal dihapus");
+		}
+		return statusDto;
+	}
+	
 }

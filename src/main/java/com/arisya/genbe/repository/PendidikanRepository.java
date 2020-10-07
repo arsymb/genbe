@@ -12,6 +12,8 @@ import com.arisya.genbe.model.entity.Pendidikan;
 public interface PendidikanRepository extends JpaRepository<Pendidikan, Integer>{
 	
 	List<Pendidikan> findAllByPersonIdPerson(Integer idPerson);
+
+	void deleteAllByPersonIdPerson(Integer idPerson); 
 	
 	@Query(value = "SELECT jenjang FROM t_pendidikan WHERE idperson = ?1 ORDER BY tahunlulus DESC LIMIT 1", nativeQuery = true)
 	String lastJenjang(Integer idPerson);

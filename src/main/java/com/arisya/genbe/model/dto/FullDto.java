@@ -1,21 +1,23 @@
 package com.arisya.genbe.model.dto;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class FullDto {
+	private Integer idPerson;
 	private String nik;
 	private String name;
 	private String address;
 	private String hp;
-
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMM-yyyy")
-	private Date tgl;
-
+	private java.sql.Date tgl;
 	private String tempatLahir;
 	private Integer umur;
 	private String pendidikan_terakhir;
+
+	public Integer getIdPerson() {
+		return idPerson;
+	}
+
+	public void setIdPerson(Integer idPerson) {
+		this.idPerson = idPerson;
+	}	
 
 	public String getNik() {
 		return nik;
@@ -49,11 +51,11 @@ public class FullDto {
 		this.hp = hp;
 	}
 
-	public Date getTgl() {
+	public java.sql.Date getTgl() {
 		return tgl;
 	}
 
-	public void setTgl(Date tgl) {
+	public void setTgl(java.sql.Date tgl) {
 		this.tgl = tgl;
 	}
 

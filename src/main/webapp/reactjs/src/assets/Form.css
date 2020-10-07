@@ -1,0 +1,36 @@
+.form-header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.form-header-modal {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.card-light {
+    background-color: white;
+    color: black;
+    border-radius: 20px;
+}
+
+.btn-save {
+    background-color: #31251C; 
+    border: none;
+    border-radius: 20px;
+    size: 20px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.btn-table {
+    background-color: #77212E; 
+    border: none;
+    border-radius: 20px;
+    size: 20px;
+    margin-top: 20px;
+    display: inline-block;
+}

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-import { Card, Form, Button, br } from 'react-bootstrap';
+import { IoIosSave } from 'react-icons/io';
+import { Card, Form, Button } from 'react-bootstrap';
 
 import axios from 'axios';
 
-class Pendidikan extends React.Component {
+export default class Pendidikan extends Component {
     constructor(props) {
         super(props);
         this.state = this.initialState;
@@ -12,22 +13,11 @@ class Pendidikan extends React.Component {
         this.submitPendidikan = this.submitPendidikan.bind(this);
     }
 
-    handleChange = event => {
-        this.setState({
-            jenjang: event.target.value
-        });
-    };
-
     initialState = {
         id: '', jenjang: '', institusi: '', masuk: '', lulus: ''
     }
 
-    resetForm = () => {
-        this.setState(() => this.initialState);
-    }
-
     submitPendidikan(event) {
-        console.log(this.state.id + ' ' + this.state.jenjang + ' ' + this.state.institusi + ' ' + this.state.masuk + ' ' + this.state.lulus);
         event.preventDefault();
 
         const pendidikan = {
@@ -41,23 +31,29 @@ class Pendidikan extends React.Component {
         pendidikanList.push(pendidikan);
         console.log(pendidikanList);
 
-        axios.post("http://localhost:8080/pendidikan/person/"+this.state.id, pendidikanList)
+        axios.post("http://localhost:8080/pendidikan/person/" + this.state.id, pendidikanList)
             .then(response => {
                 console.log(response.data);
             });
+        this.setState(this.initialState);
     }
 
-    pendidikanChange(event){
+    pendidikanChange(event) {
         this.setState({
-            [event.target.name]:event.target.value
+            [event.target.name]: event.target.value
         })
+    }
+
+    resetPendidikan = () => {
+        this.setState(() => this.initialState);
     }
 
     render() {
         return (
             <>
-                <Card className="border border-dark bg-warning text-black">
-                    <Card.Header className="text-center" as="h5">FORM PENDIDIKAN</Card.Header>
+                <Card className="bg-light text-black" style={{ borderRadius: "20px" }}>
+                    {/* <Card.Header className="text-center" as="h5">FORM PENDIDIKAN</Card.Header> */}
+                    <h2 style={{ marginTop: "20px", marginBottom: "20px", textAlign: "center", textDecoration: "underline", fontWeight: "bold" }}>FORM PENDIDIKAN</h2>
                     <Form id="formPendidikan" onSubmit={this.submitPendidikan}>
                         <Card.Body>
                             <Form.Group controlId="formGridId">
@@ -66,7 +62,7 @@ class Pendidikan extends React.Component {
                             </Form.Group>
                             <Form.Group controlId="formGridJenjang">
                                 <Form.Label>Jenjang</Form.Label>
-                                <Form.Control required as="select" name="jenjang" onChange={this.handleChange} custom>
+                                <Form.Control required as="select" name="jenjang" value={this.state.jenjang} onChange={this.pendidikanChange} custom>
                                     <option value="">Pilih...</option>
                                     <option value="sd">SD</option>
                                     <option value="smp">SMP</option>
@@ -88,16 +84,13 @@ class Pendidikan extends React.Component {
                                 <Form.Label>Tahun Lulus:</Form.Label>
                                 <Form.Control required autoComplete="off" type="text" name="lulus" onChange={this.pendidikanChange} placeholder="Masukkan tahun lulus" />
                             </Form.Group>
+                            <div style={{ textAlign: "center" }}>
+                                <Button size="lg" style={{ backgroundColor: "#31251C", border: "none", borderRadius: "20px" }} type="submit"><IoIosSave />Simpan</Button>
+                            </div>
                         </Card.Body>
-                        <Card.Footer style={{"textAlign":"right"}}>
-                            <Button size="sm" variant="dark" type="submit">Simpan</Button>
-                        </Card.Footer>
                     </Form>
                 </Card>
-                <br />
             </>
         )
     }
 }
-
-export default Pendidikan;

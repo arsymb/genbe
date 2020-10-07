@@ -39,8 +39,8 @@ public class GenbeController {
 
 	@GetMapping("/home/index7")
 	public String IndexSeven(Model model) {
-		// PersonDto personDto = new PersonDto();
-		// model.addAttribute("formDto", personDto);
+		// PersonDto idPerson = new PersonDto();
+		// model.addAttribute("formDto", idPerson);
 		return "index/index7";
 	}
 	

@@ -56,7 +56,7 @@ public class PersonController {
 		      PersonDto personDto = new PersonDto();
 		      Biodata biodata = biodataRepository.findAllByPersonIdPerson(p.getIdPerson());
 		      personDto.setId(biodata.getIdBio());
-		      personDto.setIdPerson(p.getIdPerson());
+		      personDto.setIdPerson(biodata.getPerson().getIdPerson());
 		      personDto.setNik(p.getNik());
 		      personDto.setName(p.getNama());
 		      personDto.setAddress(p.getAlamat());
@@ -92,16 +92,16 @@ public class PersonController {
 		return personService.updatePerson(newPerson, id);
 	}
 
-	// http://localhost:8080/person/pendidikan
-	@GetMapping("/pendidikan")
+	// http://localhost:8080/person/data
+	@GetMapping("/data")
 	public List<FullDto> getAll() {
 		List<Biodata> biodataList = biodataRepository.findAll();
 		List<FullDto> fullDto = biodataList.stream().map(x -> convertToDto(x.getPerson().getNik())).collect(Collectors.toList());
 		return fullDto;
 	}
 	
-	// http://localhost:8080/person/pendidikan/1212121212121212
-	@GetMapping("/pendidikan/{nik}")
+	// http://localhost:8080/person/data/1212121212121212
+	@GetMapping("/data/{nik}")
 	public Object getAllByNik(@PathVariable String nik) {
 		List<Object> status = new ArrayList<>();
 		StatusDto statusDto = new StatusDto();
@@ -134,6 +134,7 @@ public class PersonController {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(biodata.getTglLahir());
 		
+		fullDto.setIdPerson(biodata.getPerson().getIdPerson());
 		fullDto.setNik(biodata.getPerson().getNik());
 		fullDto.setName(biodata.getPerson().getNama());
 		fullDto.setAddress(biodata.getPerson().getAlamat());
@@ -143,6 +144,12 @@ public class PersonController {
 		fullDto.setUmur(Year.now().getValue() - calendar.get(Calendar.YEAR));
 		fullDto.setPendidikan_terakhir(pendidikanRepository.lastJenjang(biodata.getPerson().getIdPerson()));
 		return fullDto;
+	}
+
+	// http://localhost:8080/person/1
+	@DeleteMapping("/{id}")
+	public StatusDto delete(@PathVariable Integer id){
+		return personService.deleteData(id);
 	}
 	
 }

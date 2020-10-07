@@ -53,7 +53,7 @@
 			addToTable: function () {
 				$.ajax({
 					type: 'GET',
-					url: '/person/pendidikan/' + $("#nik").val(),
+					url: '/person/data/' + $("#nik").val(),
 					success: function (result) {
 						console.log(result);
 						const Toast = Swal.mixin({

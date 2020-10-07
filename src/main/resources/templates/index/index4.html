@@ -223,7 +223,7 @@
 									title: "Action",
 									data: null,
 									render: function (data, type, row) {
-										return "<button class='btn btn-secondary' onclick=formPerson.setEditData('" + data.id + "')>Edit</button>"
+										return "<button class='btn btn-secondary' onclick=formPerson.setEditData('" + data.idPerson + "')>Edit</button>"
 									}
 								}
 							]
@@ -314,7 +314,7 @@
 						data: JSON.stringify(dataResult),
 						success: function (result) {
 							console.log('success', result);
-							formPerson.create();
+							tablePerson.create();
 							const Toast = Swal.mixin({
 								toast: true,
 								position: 'top-end',
